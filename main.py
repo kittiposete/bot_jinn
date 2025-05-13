@@ -1,3 +1,4 @@
+import datetime
 import time
 
 from selenium import webdriver
@@ -90,10 +91,9 @@ login_button = WebDriverWait(driver, 10).until(
         (By.XPATH, "//button[@class='btn btn-primary form-control']")
     )
 )
+
 # Click the login button
 login_button.click()
-
-
 
 # button that text = "ลงทะเบียนวิชาเพิ่มเติม" #section2 > div.row.col-12.g-0.p-1.m-0.mb-5 > div:nth-child(5) > button
 register_button = WebDriverWait(driver, 10).until(
@@ -105,7 +105,13 @@ register_button = WebDriverWait(driver, 10).until(
         )
     )
 )
-register_button.click()
+timeout = datetime.datetime.now () + datetime.timedelta(seconds=10)
+while datetime.datetime.now() < timeout:
+    try:
+        register_button.click()
+        break
+    except Exception as e:
+        pass
 
 # register_button = WebDriverWait(driver, 10).until(
 #     EC.element_to_be_clickable(
