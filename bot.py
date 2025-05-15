@@ -167,7 +167,6 @@ class BotWorker:
                 header = table_header
                 break
 
-
         is_found = False
         timeout = datetime.datetime.now() + datetime.timedelta(seconds=10)
         while datetime.datetime.now() < timeout:
@@ -182,7 +181,6 @@ class BotWorker:
                     else:
                         break
 
-
                 for row in rows:
                     # get all td
                     tds = row.find_elements(By.TAG_NAME, 'td')
@@ -195,9 +193,8 @@ class BotWorker:
                         section = tds[header.index("กลุ่ม")].text.strip()
 
                         if subject_name == subject.name and subject_code == subject.code and section == subject.section:
-                            print("found subject name: ", subject_name)
-                            print("found subject code: ", subject_code)
-                            print("found subject section: ", section)
+                            print(
+                                f"Found subject: {subject_name} ({subject_code}) section {section}")
                             is_found = True
 
                             # เลือก td
