@@ -43,7 +43,7 @@ class BotWorker:
 
         # Set up Chrome options
         firefox_options = Options()
-        firefox_options.add_argument("--headless")  # Run in headless mode (no GUI)
+        # firefox_options.add_argument("--headless")  # Run in headless mode (no GUI)
 
         # Set up the Chrome WebDriver
         self.driver = webdriver.Firefox(options=firefox_options)
