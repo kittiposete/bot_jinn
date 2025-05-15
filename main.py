@@ -4,11 +4,11 @@ import datetime
 from bot import Subject, BotWorker
 
 
-def enroll_subject(subject, datetime):
+def enroll_subject(subject, enroll_time):
     try:
         worker = BotWorker()
         # Wait until the specified datetime
-        while datetime > datetime.datetime.now():
+        while enroll_time > datetime.datetime.now():
             # Sleep for a short time to avoid busy waiting
             threading.Event().wait(0.1)
             pass
@@ -33,7 +33,9 @@ subjects = [
 threads = []
 
 # 16 may 2025 17:00
-enroll_time = datetime.datetime(2025, 5, 16, 17, 0, 1)
+# enroll_time = datetime.datetime(2025, 5, 16, 17, 0, 1)
+
+enroll_time = datetime.datetime(2025, 5, 16, 0, 36, 50)
 
 for subject in subjects:
     t = threading.Thread(target=enroll_subject, args=(subject, enroll_time))

@@ -110,19 +110,6 @@ class BotWorker:
 
         self.driver.refresh()
 
-    def __init__(self):
-        self.driver = None
-        self._login()
-
-    def __del__(self):
-        if self.driver is not None:
-            self.driver.quit()
-
-    def refresh(self):
-        # refresh the page
-        self.driver.refresh()
-
-    def enroll(self, subject: Subject):
         # button that text = "ลงทะเบียนวิชาเพิ่มเติม" #section2 > div.row.col-12.g-0.p-1.m-0.mb-5 > div:nth-child(5) > button
         register_button = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(
@@ -140,6 +127,20 @@ class BotWorker:
                 break
             except Exception as _:
                 pass
+
+    def __init__(self):
+        self.driver = None
+        self._login()
+
+    def __del__(self):
+        if self.driver is not None:
+            self.driver.quit()
+
+    def refresh(self):
+        # refresh the page
+        self.driver.refresh()
+
+    def enroll(self, subject: Subject):
 
         # zone header รายวิชา ที่สามารถเลือกได้ h6
         zone_header = WebDriverWait(self.driver, 10).until(
