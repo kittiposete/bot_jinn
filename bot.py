@@ -141,7 +141,6 @@ class BotWorker:
         self.driver.refresh()
 
     def enroll(self, subject: Subject):
-
         # zone header รายวิชา ที่สามารถเลือกได้ h6
         zone_header = WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located(

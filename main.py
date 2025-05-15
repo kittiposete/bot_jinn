@@ -14,7 +14,6 @@ def enroll_subject(subject, enroll_time):
             pass
 
         worker.refresh()
-
         worker.enroll(subject)
         print(f"Enrolled: {subject.name}")
     except Exception as e:
@@ -33,9 +32,9 @@ subjects = [
 threads = []
 
 # 16 may 2025 17:00
-# enroll_time = datetime.datetime(2025, 5, 16, 17, 0, 1)
-
-enroll_time = datetime.datetime(2025, 5, 16, 0, 36, 50)
+enroll_time = datetime.datetime(2025, 5, 16, 17, 0, 1)
+#
+# enroll_time = datetime.datetime(2025, 5, 16, 0, 41, 10)
 
 for subject in subjects:
     t = threading.Thread(target=enroll_subject, args=(subject, enroll_time))
