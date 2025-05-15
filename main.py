@@ -1,20 +1,47 @@
-import bot
-from bot import Subject
+import threading
+import datetime
+
+from bot import Subject, BotWorker
 
 
-subject_name = "ฟิสิกส์ 2"
-subject_code = "ว30212"
-subject_section = "4"
-subject = Subject(
-    name=subject_name,
-    code=subject_code,
-    section=subject_section
-)
+def enroll_subject(subject, datetime):
+    try:
+        worker = BotWorker()
+        # Wait until the specified datetime
+        while datetime > datetime.datetime.now():
+            # Sleep for a short time to avoid busy waiting
+            threading.Event().wait(0.1)
+            pass
 
-bot.BotWorker().enroll(
-    subject=subject,
-)
+        worker.refresh()
+
+        worker.enroll(subject)
+        print(f"Enrolled: {subject.name}")
+    except Exception as e:
+        print(f"Enrollment failed for {subject.name}: {e}")
+    finally:
+        del worker
 
 
-print("press enter to exit")
+# List of subjects to enroll
+subjects = [
+    Subject("เคมี 3", "ว30233", "4"),
+    Subject("ฟิสิกส์ 2", "ว30212", "4"),
+    Subject("นวัตกรรมเพื่อสังคมอนาคต", "ส32251", "1"),
+]
+
+threads = []
+
+# 16 may 2025 17:00
+enroll_time = datetime.datetime(2025, 5, 16, 17, 0, 1)
+
+for subject in subjects:
+    t = threading.Thread(target=enroll_subject, args=(subject, enroll_time))
+    threads.append(t)
+    t.start()
+
+for t in threads:
+    t.join()
+
+print("Press enter to exit")
 input()

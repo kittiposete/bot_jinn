@@ -118,6 +118,10 @@ class BotWorker:
         if self.driver is not None:
             self.driver.quit()
 
+    def refresh(self):
+        # refresh the page
+        self.driver.refresh()
+
     def enroll(self, subject: Subject):
         # button that text = "ลงทะเบียนวิชาเพิ่มเติม" #section2 > div.row.col-12.g-0.p-1.m-0.mb-5 > div:nth-child(5) > button
         register_button = WebDriverWait(self.driver, 10).until(
