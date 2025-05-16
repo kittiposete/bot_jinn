@@ -40,9 +40,9 @@ subjects = [
 threads = []
 
 # 16 may 2025 17:00
-# enroll_time = datetime.datetime(2025, 5, 16, 17, 0, 1)
-
-enroll_time = datetime.datetime(2025, 5, 16, 12, 5, 00)
+enroll_time = datetime.datetime(2025, 5, 16, 17, 0, 1)
+#
+# enroll_time = datetime.datetime(2025, 5, 16, 12, 5, 00)
 
 for subject in subjects:
     worker = BotWorker()
