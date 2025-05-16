@@ -36,6 +36,8 @@ class BotWorker:
         return None
 
     def login(self):
+        # Open a webpage
+        self.driver.get("https://jinn.page/th/@SatitChula/home")
         # Get the email from the .env file
         email = self._get_email()
         # Get the password from the .env file
@@ -129,9 +131,6 @@ class BotWorker:
         # Set up the Chrome WebDriver
         self.driver = webdriver.Firefox(options=firefox_options)
 
-        # Open a webpage
-        self.driver.get("https://jinn.page/th/@SatitChula/home")
-
 
     def __del__(self):
         if self.driver is not None:
@@ -209,6 +208,7 @@ class BotWorker:
                                     pass
 
             except Exception as e:
+                # print(f"Error: {e}")
                 continue
 
             if is_found:
