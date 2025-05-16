@@ -124,6 +124,7 @@ class BotWorker:
         # Set up Chrome options
         firefox_options = Options()
         firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
+        firefox_options.add_argument("--disable-gpu")  # keeps things stable on Windows
 
         # Set up Chrome options
         # chrome_options = webdriver.ChromeOptions()
