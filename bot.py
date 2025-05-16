@@ -123,7 +123,7 @@ class BotWorker:
     def __init__(self):
         # Set up Chrome options
         firefox_options = Options()
-        # firefox_options.add_argument("--headless")  # Run in headless mode (no GUI)
+        firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
 
         # Set up Chrome options
         # chrome_options = webdriver.ChromeOptions()
