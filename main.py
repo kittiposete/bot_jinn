@@ -1,5 +1,5 @@
-import threading
 import datetime
+import threading
 
 from bot import Subject, BotWorker
 
@@ -16,6 +16,9 @@ def enroll_subject(subject, enroll_time):
         worker.refresh()
         worker.enroll(subject)
         print(f"Enrolled: {subject.name}")
+        # wait for 2 minutes
+        print("press enter to continue")
+        input()
     except Exception as e:
         print(f"Enrollment failed for {subject.name}: {e}")
     finally:
