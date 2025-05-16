@@ -10,7 +10,7 @@ def enroll_subject(subject, enroll_time, worker):
         # Wait until the specified datetime
         while enroll_time > datetime.datetime.now():
             # Sleep for a short time to avoid busy waiting
-            threading.Event().wait(0.1)
+            threading.Event().wait(0.3)
             pass
 
         worker.refresh()
