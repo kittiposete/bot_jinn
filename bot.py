@@ -1,10 +1,10 @@
 import datetime
 
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.firefox.options import Options
 
 
 class Subject:
@@ -35,21 +35,11 @@ class BotWorker:
                     return line.split('=')[1].strip()
         return None
 
-    def _login(self):
+    def login(self):
         # Get the email from the .env file
         email = self._get_email()
         # Get the password from the .env file
         password = self._get_password()
-
-        # Set up Chrome options
-        firefox_options = Options()
-        # firefox_options.add_argument("--headless")  # Run in headless mode (no GUI)
-
-        # Set up the Chrome WebDriver
-        self.driver = webdriver.Firefox(options=firefox_options)
-
-        # Open a webpage
-        self.driver.get("https://jinn.page/th/@SatitChula/home")
 
         # get a that href="https://jinn.page/th/@SatitChula/entry/2BAbxWRsjvCAsXQ6WaQQ/main/cache14"
         student_button = WebDriverWait(self.driver, 10).until(
@@ -129,8 +119,19 @@ class BotWorker:
                 pass
 
     def __init__(self):
-        self.driver = None
-        self._login()
+        # Set up Chrome options
+        firefox_options = Options()
+        # firefox_options.add_argument("--headless")  # Run in headless mode (no GUI)
+
+        # Set up Chrome options
+        # chrome_options = webdriver.ChromeOptions()
+
+        # Set up the Chrome WebDriver
+        self.driver = webdriver.Firefox(options=firefox_options)
+
+        # Open a webpage
+        self.driver.get("https://jinn.page/th/@SatitChula/home")
+
 
     def __del__(self):
         if self.driver is not None:
