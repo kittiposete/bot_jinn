@@ -1,4 +1,5 @@
 import datetime
+import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -37,7 +38,14 @@ class BotWorker:
 
     def login(self):
         # Open a webpage
-        self.driver.get("https://jinn.page/th/@SatitChula/home")
+        self.driver.set_page_load_timeout(6)
+        try:
+            self.driver.get("https://jinn.page/th/@SatitChula/home")
+            self.driver.set_page_load_timeout(30)
+        except Exception as _:
+            self.driver.set_page_load_timeout(30)
+            self.driver.get("https://jinn.page/th/@SatitChula/home")
+
         # Get the email from the .env file
         email = self._get_email()
         # Get the password from the .env file
@@ -90,8 +98,28 @@ class BotWorker:
             )
         )
 
-        # Click the login button
-        login_button.click()
+        for i in range(2):
+            try:
+                # Click the login button
+                login_button.click()
+                print("Logging in...")
+                break
+            except Exception as _:
+                # wait for class swal2-confirm swal2-styled and text = "OK"
+                try:
+                    ok_button = WebDriverWait(self.driver, 10).until(
+                        EC.element_to_be_clickable(
+                            (By.XPATH,
+                             "//*[contains(@class, 'swal2-confirm') and contains(@class, 'swal2-styled') and text()='OK']")
+                        )
+                    )
+
+                    # Click the OK button if needed
+                    ok_button.click()
+                except Exception:
+                    pass
+                time.sleep(1)
+                print("Retrying login...")
 
         # wait until login button disappear
         WebDriverWait(self.driver, 10).until(
@@ -102,13 +130,23 @@ class BotWorker:
 
         self.driver.refresh()
 
-        # button that text = "ลงทะเบียนวิชาเพิ่มเติม" #section2 > div.row.col-12.g-0.p-1.m-0.mb-5 > div:nth-child(5) > button
+        # enter website button
+        enter_website_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.XPATH,
+                 "/html/body/div/main/div[1]/div[1]/div/aside[2]/div/div[1]/button"
+                 )
+            )
+        )
+        enter_website_button.click()
+
+        # element that contains text "ลงทะเบียนเลือกเพิ่มเติม 2/2568" (currently a div with inner <p>)
         register_button = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable(
                 (By.XPATH,
-                 "//button[.//small[contains(text(), 'ลงทะเบียนวิชาเพิ่มเติม')]"
-                 " and contains(@class, 'btn-block')"
-                 " and contains(@class, 'btn-secondary')]"
+                 "//div[contains(@class,'hightlight-box-button')"
+                 " or contains(@class,'highlight-box-button')]"
+                 "[.//p[contains(normalize-space(.),'ลงทะเบียนเลือกเพิ่มเติม 2/2568')]]"
                  )
             )
         )
@@ -123,7 +161,7 @@ class BotWorker:
     def __init__(self):
         # Set up Chrome options
         firefox_options = Options()
-        firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
+        # firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
         firefox_options.add_argument("--disable-gpu")  # keeps things stable on Windows
 
         # Set up Chrome options
@@ -131,7 +169,6 @@ class BotWorker:
 
         # Set up the Chrome WebDriver
         self.driver = webdriver.Firefox(options=firefox_options)
-
 
     def __del__(self):
         if self.driver is not None:
