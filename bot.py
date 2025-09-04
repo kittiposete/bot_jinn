@@ -49,7 +49,7 @@ class BotWorker:
             except Exception as _:
                 pass
 
-        self.driver.set_page_load_timeout(40)
+        self.driver.set_page_load_timeout(90)
         if not is_success:
             self.driver.get("https://jinn.page/th/@SatitChula/home")
 
@@ -58,16 +58,22 @@ class BotWorker:
         # Get the password from the .env file
         password = self._get_password()
 
-        # get a that href="https://jinn.page/th/@SatitChula/entry/2BAbxWRsjvCAsXQ6WaQQ/main/cache14"
-        student_button = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(
-                (By.XPATH,
-                 "//a[@href='https://jinn.page/th/@SatitChula/entry/2BAbxWRsjvCAsXQ6WaQQ/main/cache14']")
-            )
-        )
+        for i in range(3):
+            try:
+                # get a that href="https://jinn.page/th/@SatitChula/entry/2BAbxWRsjvCAsXQ6WaQQ/main/cache14"
+                student_button = WebDriverWait(self.driver, 20).until(
+                    EC.element_to_be_clickable(
+                        (By.XPATH,
+                         "//a[@href='https://jinn.page/th/@SatitChula/entry/2BAbxWRsjvCAsXQ6WaQQ/main/cache14']")
+                    )
+                )
 
-        # Click the button
-        student_button.click()
+                # Click the button
+                student_button.click()
+                break
+            except Exception as _:
+                time.sleep(1)
+                print("Retrying to find student button...")
 
         # wait for class swal2-confirm swal2-styled and text = "OK"
         ok_button = WebDriverWait(self.driver, 10).until(
@@ -179,7 +185,7 @@ class BotWorker:
     def __init__(self):
         # Set up Chrome options
         firefox_options = Options()
-        firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
+        # firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
         firefox_options.add_argument("--disable-gpu")  # keeps things stable on Windows
 
         # Set up Chrome options
