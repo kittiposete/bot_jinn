@@ -39,11 +39,18 @@ class BotWorker:
     def login(self):
         # Open a webpage
         self.driver.set_page_load_timeout(6)
-        try:
-            self.driver.get("https://jinn.page/th/@SatitChula/home")
-            self.driver.set_page_load_timeout(30)
-        except Exception as _:
-            self.driver.set_page_load_timeout(30)
+
+        is_success = False
+        for i in range(5):
+            try:
+                self.driver.get("https://jinn.page/th/@SatitChula/home")
+                is_success = True
+                break
+            except Exception as _:
+                pass
+
+        self.driver.set_page_load_timeout(40)
+        if not is_success:
             self.driver.get("https://jinn.page/th/@SatitChula/home")
 
         # Get the email from the .env file
@@ -100,8 +107,17 @@ class BotWorker:
 
         for i in range(2):
             try:
-                # Click the login button
-                login_button.click()
+                # time out 4 second
+                timeout = datetime.datetime.now() + datetime.timedelta(seconds=4)
+                while datetime.datetime.now() < timeout:
+                    # Click the login button
+                    login_button.click()
+
+                    # check is login button still exist
+                    try:
+                        self.driver.find_element(By.XPATH, "//button[@class='btn btn-primary form-control']")
+                    except Exception:
+                        break
                 print("Logging in...")
                 break
             except Exception as _:
@@ -251,3 +267,5 @@ class BotWorker:
 
             if is_found:
                 break
+        if not is_found:
+            raise Exception(f"Subject not found: {subject.name} ({subject.code}) section {subject.section}")
