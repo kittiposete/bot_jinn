@@ -165,7 +165,7 @@ class BotWorker:
         enter_website_button.click()
 
         # element that contains text "ลงทะเบียนเลือกเพิ่มเติม 2/2568" (currently a div with inner <p>)
-        register_button = WebDriverWait(self.driver, 10).until(
+        register_button = WebDriverWait(self.driver, 40).until(
             EC.element_to_be_clickable(
                 (By.XPATH,
                  "//div[contains(@class,'hightlight-box-button')"
