@@ -104,20 +104,13 @@ class BotWorker:
                 (By.XPATH, "//button[@class='btn btn-primary form-control']")
             )
         )
+        time.sleep(1)
 
         for i in range(2):
             try:
-                # time out 4 second
-                timeout = datetime.datetime.now() + datetime.timedelta(seconds=4)
-                while datetime.datetime.now() < timeout:
-                    # Click the login button
-                    login_button.click()
+                # Click the login button
+                login_button.click()
 
-                    # check is login button still exist
-                    try:
-                        self.driver.find_element(By.XPATH, "//button[@class='btn btn-primary form-control']")
-                    except Exception:
-                        break
                 print("Logging in...")
                 break
             except Exception as _:
@@ -138,11 +131,20 @@ class BotWorker:
                 print("Retrying login...")
 
         # wait until login button disappear
-        WebDriverWait(self.driver, 10).until(
-            EC.invisibility_of_element_located(
-                (By.XPATH, "//button[@class='btn btn-primary form-control']")
-            )
-        )
+        for i in range(2):
+            try:
+                if i == 0:
+                    timeout_second = 10
+                else:
+                    timeout_second = 5
+                WebDriverWait(self.driver, timeout_second).until(
+                    EC.invisibility_of_element_located(
+                        (By.XPATH, "//button[@class='btn btn-primary form-control']")
+                    )
+                )
+            except Exception:
+                pass
+            self.driver.refresh()
 
         self.driver.refresh()
 
@@ -177,7 +179,7 @@ class BotWorker:
     def __init__(self):
         # Set up Chrome options
         firefox_options = Options()
-        # firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
+        firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
         firefox_options.add_argument("--disable-gpu")  # keeps things stable on Windows
 
         # Set up Chrome options
