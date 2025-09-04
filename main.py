@@ -8,12 +8,14 @@ def enroll_subject(subject, enroll_time, worker):
     try:
         worker.login()
         # Wait until the specified datetime
-        while datetime.datetime.now() < enroll_time:
+        # while datetime.datetime.now() < enroll_time:
+        while False:
             # Sleep for a short time to avoid busy waiting
             threading.Event().wait(0.3)
             pass
 
         worker.refresh()
+        print(f"Enrolling now... {subject.name}")
         worker.enroll(subject)
         print(f"Enrolled: {subject.name}")
         # wait for 2 minutes
@@ -30,8 +32,8 @@ def enroll_subject(subject, enroll_time, worker):
 subjects = [
     Subject("คณิตศาสตร์เพิ่มเติม 10", "ค32234", "6"),
     Subject("พรีแคลคูลัส 2", "ค32209", "1"),
-    Subject("ฟิสิกส์ 3", "ว30213", "5"),
-    Subject("เคมี 4", "ว30234", "2"),
+    Subject("ฟิสิกส์3", "ว30213", "5"),
+    Subject("เคมี4", "ว30234", "2"),
     Subject("เศรษฐศาสตร์น่ารู้", "ส30233", "1"),
     Subject("นวัตกรรมผู้ประกอบการ", "ส33254", "1"),
 ]

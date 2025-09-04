@@ -268,6 +268,13 @@ class BotWorker:
                                     element.click()
                                 except Exception:
                                     pass
+                        else:
+                            pass
+                            # print("comparing:")
+                            # print(f"  {subject_name} == {subject.name}: is {subject_name == subject.name}")
+                            # print(f"  {subject_code} == {subject.code}: is {subject_code == subject.code}")
+                            # print(f"  {section} == {subject.section}: is {section == subject.section}")
+                            # print("  Not matched\n")
 
             except Exception as e:
                 # print(f"Error: {e}")
