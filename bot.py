@@ -185,7 +185,7 @@ class BotWorker:
     def __init__(self):
         # Set up Chrome options
         firefox_options = Options()
-        # firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
+        firefox_options.add_argument("--headless")  # ** MUST RUN IN HEADLESS MODE TO !!! **
         firefox_options.add_argument("--disable-gpu")  # keeps things stable on Windows
 
         # Set up Chrome options
@@ -243,7 +243,9 @@ class BotWorker:
                     else:
                         break
 
+                count  = 0
                 for row in rows:
+                    count += 1
                     # get all td
                     tds = row.find_elements(By.TAG_NAME, 'td')
                     if len(tds) == 10:
@@ -257,6 +259,7 @@ class BotWorker:
                         if subject_name == subject.name and subject_code == subject.code and section == subject.section:
                             print(
                                 f"Found subject: {subject_name} ({subject_code}) section {section}")
+                            print("row: ", count)
                             is_found = True
 
                             # เลือก td

@@ -19,8 +19,8 @@ def enroll_subject(subject, enroll_time, worker):
         worker.enroll(subject)
         print(f"Enrolled: {subject.name}")
         # wait for 2 minutes
-        print("press enter to continue")
-        input()
+        # print("press enter to continue")
+        # input()
     except Exception as e:
         print(f"Enrollment failed for {subject.name}: {e}")
         raise e
@@ -33,7 +33,7 @@ subjects = [
     Subject("คณิตศาสตร์เพิ่มเติม 10", "ค32234", "6"),
     Subject("พรีแคลคูลัส 2", "ค32209", "1"),
     Subject("ฟิสิกส์3", "ว30213", "5"),
-    Subject("เคมี4", "ว30234", "2"),
+    # Subject("เคมี4", "ว30234", "2"),
     Subject("เศรษฐศาสตร์น่ารู้", "ส30233", "1"),
     Subject("นวัตกรรมผู้ประกอบการ", "ส33254", "1"),
 ]
